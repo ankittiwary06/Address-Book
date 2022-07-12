@@ -3,6 +3,7 @@ package com.vikasietum.client;
 import com.vikasietum.model.Category;
 import com.vikasietum.model.Contact;
 import com.vikasietum.service.ContactService;
+import com.vikasietum.utility.AddressBookUtil;
 import com.vikasietum.utility.Constants;
 
 import java.io.File;
@@ -21,6 +22,7 @@ public class AddressBookApp {
             System.out.println("press 1 to add new Contact ");
             System.out.println("press 2 to display Contact ");
             System.out.println("press 3 to edit Contact ");
+            System.out.println("press 4 to remove Contact ");
             option = sc.nextLine();
             if (option.equals("1")) {
                 addNewContact(contactService,sc);
@@ -34,6 +36,14 @@ public class AddressBookApp {
                 contactService.edit();
                 continue;
             }
+            if(option.equals("4"))
+            {
+                System.out.println("Please enter First Name");
+                String firstName=sc.nextLine();
+                System.out.println("Please enter Last Name");
+                String lastName=sc.nextLine();
+                contactService.remove(firstName,lastName);
+            }
         }
     }
 
@@ -42,19 +52,19 @@ public class AddressBookApp {
         Contact contact = new Contact();
         System.out.println("please enter First Name");
         input = sc.nextLine();
-        input = validateInput("First Name", input, sc);
+        input = AddressBookUtil.validateInput("First Name", input, sc);
         contact.setName(input);
         System.out.println("please enter SurName");
         input = sc.nextLine();
-        input = validateInput("SurName", input, sc);
+        input = AddressBookUtil.validateInput("SurName", input, sc);
         contact.setSurname(input);
         System.out.println("please enter email");
         input = sc.nextLine();
-        input = validateInput("email", input, sc);
+        input = AddressBookUtil.validateInput("email", input, sc);
         contact.setEmail(input);
         System.out.println("please enter telephone Number");
         input = sc.nextLine();
-        input = validateInput("telephone Number", input, sc);
+        input = AddressBookUtil.validateInput("telephone Number", input, sc);
         contact.setTelephoneNumber(input);
         System.out.println("please enter Age (optional # press enter to continue)");
         input = sc.nextLine();
@@ -105,11 +115,5 @@ public class AddressBookApp {
         System.out.println("contact has been saved");
     }
 
-    public static String validateInput(String param, String input, Scanner sc) {
-        while (input.isEmpty()) {
-            System.out.println("please enter " + param + " it is mandotary");
-            input = sc.nextLine();
-        }
-        return input;
-    }
+
 }
